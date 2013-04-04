@@ -14,4 +14,4 @@ public class CitiesFrag extends android.support.v4.app.Fragment{
 		return myFragmentView;
 	}
 	
-}
+} 
