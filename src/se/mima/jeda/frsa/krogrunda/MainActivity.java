@@ -100,8 +100,8 @@ public class MainActivity extends FragmentActivity{
 		}
 
 		@Override
-		public void onPageSelected(int arg0) {
-			// TODO Auto-generated method stub
+		public void onPageSelected(int position) {
+			mActionBar.setSelectedNavigationItem(position);
 
 		}
 

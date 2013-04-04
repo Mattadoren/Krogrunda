@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Krogrunda</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Inställningar</string>
     <string name="title_activity_splashscreen">SplashscreenActivity</string>
     <string name="beer_news_string">Ölnyheter</string>
     <string name="nearby_string">I Närheten</string>

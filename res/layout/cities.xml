@@ -12,6 +12,8 @@
         <TextView 
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_margin="90dp"
+            android:textSize="30sp"
             android:text="@string/cities_string"/>
         
     </LinearLayout>
