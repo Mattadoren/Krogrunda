@@ -38,8 +38,8 @@ public class SplashscreenActivity extends Activity {
 
 					SplashscreenActivity.this.finish();
 					
-					overridePendingTransition(R.anim.mainfadein,
-							R.anim.splashfadeout);
+//					overridePendingTransition(R.anim.mainfadein,
+//							R.anim.splashfadeout);
 				}
 
 			}
