@@ -27,12 +27,19 @@ public class SplashscreenActivity extends Activity {
 
 				finish();
 
+				
+
 				if (!mIsBackButtonPressed) {
 					// start the home screen if the back button wasn't pressed
 					// already
 					Intent intent = new Intent(SplashscreenActivity.this,
 							MainActivity.class);
 					SplashscreenActivity.this.startActivity(intent);
+
+					SplashscreenActivity.this.finish();
+					
+					overridePendingTransition(R.anim.mainfadein,
+							R.anim.splashfadeout);
 				}
 
 			}
