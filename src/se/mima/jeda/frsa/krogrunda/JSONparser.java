@@ -14,16 +14,25 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
-public class JSONparser {
+public class JSONparser extends AsyncTask<String, Void, JSONObject> {
 
 	// initierar variablerna
+
 	static InputStream is = null;
 	static JSONObject jObj = null;
 	static String json = "";
 
-	public JSONparser() {
+	public interface MyCallbackInterface {
+		public void onRequestComplete(JSONObject result);
+	}
+
+	private MyCallbackInterface mCallback;
+
+	public JSONparser(MyCallbackInterface callback) {
+		mCallback = callback;
 	}
 
 	public JSONObject getJSONFromUrl(String url) {
@@ -39,7 +48,7 @@ public class JSONparser {
 			HttpEntity httpEntity = httpResponse.getEntity();
 			is = httpEntity.getContent();
 
-			//f�ngar exceptions ifall de sker
+			// f�ngar exceptions ifall de sker
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {
@@ -48,7 +57,8 @@ public class JSONparser {
 			e.printStackTrace();
 		}
 
-		//skapar en buffered reader som l�ser av datan p� hemsidan som jag h�mtar informationen ifr�n.
+		// skapar en buffered reader som l�ser av datan p� hemsidan som jag
+		// h�mtar informationen ifr�n.
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					is, "UTF-8"), 8000);
@@ -72,8 +82,17 @@ public class JSONparser {
 
 		// return JSON String
 		return jObj;
-
 	}
 
-	
+	@Override
+	protected JSONObject doInBackground(String... params) {
+		String url = params[0];
+		return getJSONFromUrl(url);
+	}
+
+	@Override
+	protected void onPostExecute(JSONObject result) {
+		mCallback.onRequestComplete(result);
+	}
+
 }
