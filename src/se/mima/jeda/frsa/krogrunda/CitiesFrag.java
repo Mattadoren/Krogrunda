@@ -7,18 +7,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.mima.jeda.frsa.krogrunda.JSONparser.MyCallbackInterface;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.SlidingDrawer;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class CitiesFrag extends ListFragment implements OnItemClickListener, MyCallbackInterface{
 	
@@ -69,19 +68,18 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener, MyC
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, cities);
 		Log.e("onRequestComplete", "Skapar ArrayAdapter");
 		setListAdapter(adapter);
+		ListView lv = getListView();
+		lv.setOnItemClickListener(this);
 		Log.e("onRequestComplete", "Sätter ListAdapter");
 		
-		
-//		ListView lv = (ListView)findViewById(R.id.cityList);
-//		ListView lv = (ListView) findViewById(R.id.cityList);
-//    	lv.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, cities));
-//    	lv.setOnItemClickListener(this);
-
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		String cityId = cityIds.get(position).toString();
+		Intent startPubsListIntent = new Intent(getActivity(), PubsActivity.class);
+		startPubsListIntent.putExtra("cityId", cityId);
+		startActivity(startPubsListIntent);
 		
 	}
 	

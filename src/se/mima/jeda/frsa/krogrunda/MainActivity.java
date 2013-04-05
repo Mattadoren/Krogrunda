@@ -6,6 +6,8 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,8 +32,7 @@ public class MainActivity extends FragmentActivity{
 		// Skapar ActionBar och sätter titel.
 		final ActionBar actBar = getActionBar();
 		actBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		actBar.setTitle(R.string.app_name);
-
+		actBar.setTitle("");
 		// Fäster Tabs till fragmentklasserna och sätter titlar.
 		tabsAdapter = new TabsAdapter(this, viewPager);
 		
@@ -141,12 +142,4 @@ public class MainActivity extends FragmentActivity{
 		}
 
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
 } 
