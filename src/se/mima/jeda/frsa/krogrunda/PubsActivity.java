@@ -30,16 +30,7 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 	static String TAG_ID = "id";
 	static String TAG_NAME = "name";
 	static String TAG_ADDRESS = "address";
-	static String TAG_OPEN_HOURS = "openhours";
-	static String TAG_LAT = "lat";
-	static String TAG_LNG = "lng";
-
-	private static String name;
-	private static String address;
-	private static String openhours;
-	private static String lat;
-	private static String lng;
-
+	
 	ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 	private ArrayList<String> pubIds = new ArrayList<String>();
 
@@ -80,11 +71,9 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 
 				data.add(info);
 				
-				name = c.getString(TAG_NAME);
-				address = c.getString(TAG_ADDRESS);
-				openhours = c.getString(TAG_OPEN_HOURS);
-				lat = c.getString(TAG_LAT);
-				lng = c.getString(TAG_LNG);
+				if (url.isEmpty()){
+					url = "Ingen info";
+				}
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -107,9 +96,6 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 
 		String pubId = pubIds.get(position).toString();
 		Intent startPubInfoIntent = new Intent(this, PubInfoActivity.class);
-		startPubInfoIntent.putExtra("pubId", pubId);
-		startPubInfoIntent.putExtra("pubId", pubId);
-		startPubInfoIntent.putExtra("pubId", pubId);
 		startPubInfoIntent.putExtra("pubId", pubId);
 		startActivity(startPubInfoIntent);
 
