@@ -19,7 +19,7 @@ import android.util.Log;
 
 public class JSONparser extends AsyncTask<String, Void, JSONObject> {
 
-	// initierar variablerna
+	// Initializing variables
 
 	static InputStream is = null;
 	static JSONObject jObj = null;
@@ -37,9 +37,9 @@ public class JSONparser extends AsyncTask<String, Void, JSONObject> {
 
 	public JSONObject getJSONFromUrl(String url) {
 
-		// G�r en HTTP request
+		// Make a HTTP request
 		try {
-			// skapar en DefaultHttpClient
+			// Creating a DefaultHttpClient
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			// skapar en HttpPost
 			HttpPost httpPost = new HttpPost(url);
@@ -48,7 +48,7 @@ public class JSONparser extends AsyncTask<String, Void, JSONObject> {
 			HttpEntity httpEntity = httpResponse.getEntity();
 			is = httpEntity.getContent();
 
-			// f�ngar exceptions ifall de sker
+			// Catching exceptions
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {
@@ -57,8 +57,7 @@ public class JSONparser extends AsyncTask<String, Void, JSONObject> {
 			e.printStackTrace();
 		}
 
-		// skapar en buffered reader som l�ser av datan p� hemsidan som jag
-		// h�mtar informationen ifr�n.
+		// BufferedReader reads the data gathered from the API
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					is, "UTF-8"), 8000);
@@ -73,14 +72,14 @@ public class JSONparser extends AsyncTask<String, Void, JSONObject> {
 			Log.e("Buffer Error", "Error converting result " + e.toString());
 		}
 
-		// f�rs�ker att parsa json objektet till en str�ng
+		// Trying to parse a JSONObject from a String
 		try {
 			jObj = new JSONObject(json);
 		} catch (JSONException e) {
 			Log.e("JSON Parser", "Error parsing data " + e.toString());
 		}
 
-		// return JSON String
+		// Return JSONObject
 		return jObj;
 	}
 
