@@ -27,12 +27,14 @@ public class MainActivity extends FragmentActivity{
 		// Skapar ViewPager och sätter till Pagern i ids.xml
 		viewPager = new ViewPager(this);
 		viewPager.setId(R.id.pager);
+		
 		setContentView(viewPager);
 
 		// Skapar ActionBar och sätter titel.
 		final ActionBar actBar = getActionBar();
 		actBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actBar.setTitle("");
+		
 		// Fäster Tabs till fragmentklasserna och sätter titlar.
 		tabsAdapter = new TabsAdapter(this, viewPager);
 		

@@ -1,6 +1,7 @@
 package se.mima.jeda.frsa.krogrunda;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 
 import se.mima.jeda.frsa.krogrunda.JSONparser.MyCallbackInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -16,8 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 public class CitiesFrag extends ListFragment implements OnItemClickListener,
 		MyCallbackInterface {
@@ -27,8 +30,9 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 	static String TAG_LIST = "list";
 	static String TAG_ID = "id";
 	static String TAG_NAME = "name";
+	static String TAG_PLACES_COUNT = "places_count";
 
-	private ArrayList<String> cities = new ArrayList<String>();
+	private ArrayList<HashMap<String, String>> citysAndCount = new ArrayList<HashMap<String, String>>();
 	private ArrayList<String> cityIds = new ArrayList<String>();
 
 	JSONArray list = null;
@@ -41,7 +45,9 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 
 		if (getListAdapter() == null) {
 			JSONparser parser = new JSONparser(this);
+			Log.d("KÖR1", "KÖR1");
 			parser.execute(url);
+			
 		}
 
 		return myFragmentView;
@@ -49,7 +55,7 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 
 	@Override
 	public void onRequestComplete(JSONObject result) {
-
+		Log.d("KÖR2", "KÖR2");
 		JSONObject json = result;
 
 		try {
@@ -59,21 +65,29 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 
 			for (int i = 0; i < list.length(); i++) {
 				JSONObject c = list.getJSONObject(i);
-				Log.e("onRequestComplete", list.getString(i));
+				
 				cityIds.add(c.getString(TAG_ID));
-				cities.add(c.getString(TAG_NAME));
+				
+				HashMap<String, String> info = new HashMap<String, String>();
+				
+				info.put(TAG_NAME, c.getString(TAG_NAME).toUpperCase());
+				info.put(TAG_PLACES_COUNT, c.getString(TAG_PLACES_COUNT));
+				
+				citysAndCount.add(info);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, cities);
-		Log.e("onRequestComplete", "Skapar ArrayAdapter");
+		SimpleAdapter adapter = new SimpleAdapter(getActivity(), citysAndCount,
+				R.layout.list_item, new String[] { TAG_NAME,
+						TAG_PLACES_COUNT}, new int[] { android.R.id.text1,
+						android.R.id.text2 });
+		
 		setListAdapter(adapter);
 		ListView lv = getListView();
 		lv.setOnItemClickListener(this);
-		Log.e("onRequestComplete", "Sätter ListAdapter");
+		
 
 	}
 
