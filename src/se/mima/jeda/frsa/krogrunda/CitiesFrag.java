@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -40,6 +41,8 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		
+		
 		View myFragmentView = inflater.inflate(R.layout.cities, container,
 				false);
 
@@ -80,9 +83,9 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 		}
 
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(), citysAndCount,
-				R.layout.list_item, new String[] { TAG_NAME,
-						TAG_PLACES_COUNT}, new int[] { android.R.id.text1,
-						android.R.id.text2 });
+				R.layout.city_list_item, new String[] { TAG_NAME,
+						TAG_PLACES_COUNT}, new int[] { R.id.cityNameText,
+						R.id.pubsCount });
 		
 		setListAdapter(adapter);
 		ListView lv = getListView();

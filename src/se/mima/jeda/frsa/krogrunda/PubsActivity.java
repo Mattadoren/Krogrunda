@@ -30,8 +30,9 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 	static String TAG_ID = "id";
 	static String TAG_NAME = "name";
 	static String TAG_ADDRESS = "address";
+	static String TAG_TAPS_COUNT = "taps_count";
 	
-	ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+	ArrayList<HashMap<String, String>> pubsAndCount = new ArrayList<HashMap<String, String>>();
 	private ArrayList<String> pubIds = new ArrayList<String>();
 
 	JSONArray list = null;
@@ -68,21 +69,19 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 				HashMap<String, String> info = new HashMap<String, String>();
 				info.put(TAG_NAME, c.getString(TAG_NAME));
 				info.put(TAG_ADDRESS, c.getString(TAG_ADDRESS));
+				info.put(TAG_TAPS_COUNT, c.getString(TAG_TAPS_COUNT));
 
-				data.add(info);
+				pubsAndCount.add(info);
 				
-				if (url.isEmpty()){
-					url = "Ingen info";
-				}
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		SimpleAdapter adapter = new SimpleAdapter(this, data,
-				android.R.layout.simple_list_item_2, new String[] { TAG_NAME,
-						TAG_ADDRESS }, new int[] { android.R.id.text1,
-						android.R.id.text2 });
+		SimpleAdapter adapter = new SimpleAdapter(this, pubsAndCount,
+				R.layout.pubs_list_item, new String[] { TAG_NAME,
+						TAG_ADDRESS, TAG_TAPS_COUNT }, new int[] { R.id.pubName,
+						R.id.pubAddress, R.id.tapsCount });
 
 		setListAdapter(adapter);
 		
