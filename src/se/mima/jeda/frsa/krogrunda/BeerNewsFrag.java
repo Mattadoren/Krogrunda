@@ -32,11 +32,6 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 	static String TAG_COUNTRY = "country";
 	static String TAG_ALC = "alcohol_vol";
 
-	private static String name;
-	private static String sysid;
-	private static String country;
-	private static String alc;
-
 	ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 	private ArrayList<String> drinks = new ArrayList<String>();
 
@@ -53,7 +48,6 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 			JSONparser parser = new JSONparser(this);
 			parser.execute(url);
 		}
-
 		return myFragmentView;
 	}
 
@@ -80,19 +74,15 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 
 				data.add(info);
 
-				name = c.getString(TAG_NAME);
-				sysid = c.getString(TAG_SYSID);
-				country = c.getString(TAG_COUNTRY);
-				alc = c.getString(TAG_ALC);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(), data,
-				R.layout.newbeer_list_item, new String[] { TAG_NAME,
-						TAG_SYSID, TAG_COUNTRY, TAG_ALC }, new int[] {
-						R.id.name, R.id.country});
+				R.layout.newbeer_list_item, new String[] { TAG_NAME, TAG_SYSID,
+						TAG_COUNTRY, TAG_ALC }, new int[] { R.id.name,
+						R.id.country });
 
 		setListAdapter(adapter);
 
@@ -102,9 +92,10 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
 		String drinkIds = drinks.get(position).toString();
-		Intent startBeerNewsInfo = new Intent(getActivity(),BeerNewsInfo.class);
+		Intent startBeerNewsInfo = new Intent(getActivity(), BeerNewsInfo.class);
 		startBeerNewsInfo.putExtra(drinkIds, drinkIds);
 		startActivity(startBeerNewsInfo);
 	}
