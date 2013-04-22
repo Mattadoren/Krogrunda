@@ -10,5 +10,6 @@
     <string name="title_activity_pubs">PubsActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_pub_info">PubInfoActivity</string>
+    <string name="title_activity_beer_news_info">BeerNewsInfo</string>
 
 </resources>
