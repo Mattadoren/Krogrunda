@@ -7,7 +7,7 @@
     <string name="beer_news_string">Ölnyheter</string>
     <string name="nearby_string">I Närheten</string>
     <string name="cities_string">Städer</string>
-    <string name="title_activity_pubs">PubsActivity</string>
+    <string name="title_activity_pubs">Pubar</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_pub_info">PubInfoActivity</string>
     <string name="title_activity_beer_news_info">BeerNewsInfo</string>
