@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.mima.jeda.frsa.krogrunda.JSONparser.MyCallbackInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -89,9 +90,9 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 		}
 
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(), data,
-				android.R.layout.simple_list_item_2, new String[] { TAG_NAME,
+				R.layout.newbeer_list_item, new String[] { TAG_NAME,
 						TAG_SYSID, TAG_COUNTRY, TAG_ALC }, new int[] {
-						android.R.id.text1, android.R.id.text2 });
+						R.id.name, R.id.country});
 
 		setListAdapter(adapter);
 
@@ -101,9 +102,11 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		String drinkIds = drinks.get(position).toString();
+		Intent startBeerNewsInfo = new Intent(getActivity(),BeerNewsInfo.class);
+		startBeerNewsInfo.putExtra(drinkIds, drinkIds);
+		startActivity(startBeerNewsInfo);
 	}
 
 }
