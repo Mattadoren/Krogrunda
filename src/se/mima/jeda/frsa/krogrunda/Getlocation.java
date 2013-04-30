@@ -47,7 +47,7 @@ public class Getlocation {
 				public void run() {
 					nearByFrag.lat = lat;
 					nearByFrag.lng = lng;
-					Toast.makeText(nearByFrag.getActivity(), lat+" och "+lng, Toast.LENGTH_LONG).show();
+					Toast.makeText(nearByFrag.getActivity(), lat+"from getlocation och "+lng, Toast.LENGTH_LONG).show();
 					mlocManager.removeUpdates(mlocListener);
 					
 				}
@@ -55,15 +55,15 @@ public class Getlocation {
 		}
 
 		public void onProviderDisabled(String provider) {
-			Toast.makeText(mContext, "Gps Disabled", Toast.LENGTH_SHORT).show();
+			
 		}
 
 		public void onProviderEnabled(String provider) {
-			Toast.makeText(mContext, " Gps Enabled", Toast.LENGTH_SHORT).show();
+			
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
+			
 
 		}
 
