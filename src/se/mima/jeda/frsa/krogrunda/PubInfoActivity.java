@@ -21,7 +21,8 @@ import android.widget.TextView;
 
 public class PubInfoActivity extends Activity implements MyCallbackInterface {
 
-	TextView nameText, addressText, openhoursText, urlText;
+	TextView nameText, addressText, openhoursText, urlText, tapsNo;
+	TextView welcomeText;
 
 	ImageView pubImg;
 
@@ -50,16 +51,22 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface {
 		setContentView(R.layout.activity_pub_info);
 
 		String pubId = getIntent().getExtras().getString("pubId");
+		String tapsCount = getIntent().getExtras().getString("tapsCount");
 
 		nameText = (TextView) findViewById(R.id.pubName);
 		addressText = (TextView) findViewById(R.id.pubAddress);
 		openhoursText = (TextView) findViewById(R.id.pubOpenhours);
 		urlText = (TextView) findViewById(R.id.pubUrl);
+		tapsNo = (TextView)findViewById(R.id.tapsNo);
+		welcomeText = (TextView)findViewById(R.id.pubInfoWelcome);
 
 		pubImg = (ImageView) findViewById(R.id.pubImg);
 
 		JSONparser parser = new JSONparser(this);
 		parser.execute(url + pubId);
+		
+		Log.d("Antal taps: ", tapsCount);
+		tapsNo.setText(tapsCount);
 	}
 
 	@Override
@@ -86,6 +93,7 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface {
 				// data.add(info); // Flytta?
 
 				nameText.setText(c.getString(TAG_NAME));
+				welcomeText.setText("Välkommen till "+c.getString(TAG_NAME)+"!");
 				addressText.setText(c.getString(TAG_ADDRESS));
 
 				if (c.getString(TAG_OPEN_HOURS).isEmpty()) {

@@ -34,6 +34,7 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 	
 	ArrayList<HashMap<String, String>> pubsAndCount = new ArrayList<HashMap<String, String>>();
 	private ArrayList<String> pubIds = new ArrayList<String>();
+	private ArrayList<String> tapsCount = new ArrayList<String>();
 
 	JSONArray list = null;
 
@@ -69,6 +70,7 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 				HashMap<String, String> info = new HashMap<String, String>();
 				info.put(TAG_NAME, c.getString(TAG_NAME));
 				info.put(TAG_ADDRESS, c.getString(TAG_ADDRESS));
+				tapsCount.add(c.getString(TAG_TAPS_COUNT));
 				info.put(TAG_TAPS_COUNT, c.getString(TAG_TAPS_COUNT));
 
 				pubsAndCount.add(info);
@@ -94,8 +96,10 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 			long id) {
 
 		String pubId = pubIds.get(position).toString();
+		String tapsNo = tapsCount.get(position).toString();
 		Intent startPubInfoIntent = new Intent(this, PubInfoActivity.class);
 		startPubInfoIntent.putExtra("pubId", pubId);
+		startPubInfoIntent.putExtra("tapsCount", tapsNo);
 		startActivity(startPubInfoIntent);
 
 	}
