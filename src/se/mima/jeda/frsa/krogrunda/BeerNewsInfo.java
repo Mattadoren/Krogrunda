@@ -1,5 +1,8 @@
 package se.mima.jeda.frsa.krogrunda;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,6 +13,8 @@ import org.json.JSONObject;
 import se.mima.jeda.frsa.krogrunda.JSONparser.MyCallbackInterface;
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -37,7 +42,6 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 	private ArrayList<String> drinks = new ArrayList<String>();
 
 	JSONObject items = null;
-
 	JSONObject c = null;
 
 	@Override
@@ -61,18 +65,41 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 	@Override
 	public void onRequestComplete(JSONObject result) {
 		JSONObject json = result;
+		final String drinkIds = getIntent().getExtras().getString("drinkIds");
 
 		try {
 			items = json.getJSONObject(TAG_PRODUCT);
 			Log.e("onRequestComplete", "hämtar öldatan");
 			Log.d("Hämtar öl", "öl");
 
-//			for (int i = 0; i < items.length(); i++) {
-//				c = items.getJSONObject(i);
+			text1.setText(items.getString(TAG_NAME));
+			text2.setText(items.getString(TAG_PRODUCER));
 
-				text1.setText(items.getString(TAG_NAME));
-				text2.setText(items.getString(TAG_PRODUCER));
-//			}
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+
+					try {
+						URL imgUrl = new URL(
+								"http://systembevakningsagenten.se/images/product/id/" + drinkIds + ".jpg");
+						final Bitmap image = BitmapFactory.decodeStream(imgUrl
+								.openConnection().getInputStream());
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								beerimg.setImageBitmap(image);
+							}
+						});
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+			}).start();
 
 		} catch (JSONException e) {
 			e.printStackTrace();
