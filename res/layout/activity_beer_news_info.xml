@@ -28,6 +28,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="hello_world" />
+    
+    <ImageView 
+        android:id="@+id/beerimg"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        />
 
 
 </LinearLayout>

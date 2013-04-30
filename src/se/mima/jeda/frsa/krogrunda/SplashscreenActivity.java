@@ -8,7 +8,7 @@ import android.os.Handler;
 public class SplashscreenActivity extends Activity {
 
 	private boolean mIsBackButtonPressed;
-	private static final int SPLASH_DURATION = 2000;
+	private static final int SPLASH_DURATION = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -31,6 +31,8 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 	static String TAG_SYSID = "sysid";
 	static String TAG_COUNTRY = "country";
 	static String TAG_ALC = "alcohol_vol";
+	static String TAG_PRICE = "price";
+	static String TAG_PRODUCER = "producer";
 
 	ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 	private ArrayList<String> drinks = new ArrayList<String>();
@@ -69,9 +71,10 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 				HashMap<String, String> info = new HashMap<String, String>();
 				info.put(TAG_NAME, c.getString(TAG_NAME));
 				info.put(TAG_SYSID, "Artikelnr: " + c.getString(TAG_SYSID));
-				info.put(TAG_COUNTRY, c.getString(TAG_COUNTRY));
+				info.put(TAG_COUNTRY, "Land: " + c.getString(TAG_COUNTRY));
 				info.put(TAG_ALC, c.getString(TAG_ALC) + "%");
-
+				info.put(TAG_PRICE, c.getString(TAG_PRICE)+ "kr");
+				info.put(TAG_PRODUCER, "Bryggeri: " + c.getString(TAG_PRODUCER));
 				data.add(info);
 
 			}
@@ -96,7 +99,7 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 			long id) {
 		String drinkIds = drinks.get(position).toString();
 		Intent startBeerNewsInfo = new Intent(getActivity(), BeerNewsInfo.class);
-		startBeerNewsInfo.putExtra(drinkIds, drinkIds);
+		startBeerNewsInfo.putExtra("drinkIds", drinkIds);
 		startActivity(startBeerNewsInfo);
 	}
 
