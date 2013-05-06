@@ -36,6 +36,7 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 
 	ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 	private ArrayList<String> drinks = new ArrayList<String>();
+	private ArrayList<String> prices = new ArrayList<String>();
 
 	JSONArray list = null;
 
@@ -65,7 +66,9 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 			for (int i = 0; i < list.length(); i++) {
 
 				JSONObject c = list.getJSONObject(i);
-
+				
+				
+				prices.add(c.getString(TAG_PRICE));
 				drinks.add(c.getString(TAG_ID));
 
 				HashMap<String, String> info = new HashMap<String, String>();
@@ -97,9 +100,12 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		Log.d(TAG_PRICE, TAG_PRICE);
+		String beerPrice = prices.get(position).toString();
 		String drinkIds = drinks.get(position).toString();
 		Intent startBeerNewsInfo = new Intent(getActivity(), BeerNewsInfo.class);
 		startBeerNewsInfo.putExtra("drinkIds", drinkIds);
+		startBeerNewsInfo.putExtra("beerPrices", beerPrice);
 		startActivity(startBeerNewsInfo);
 	}
 
