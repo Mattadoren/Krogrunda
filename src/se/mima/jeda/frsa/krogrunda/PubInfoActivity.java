@@ -55,6 +55,7 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface, On
 	JSONArray taps = null;
 
 	JSONObject c = null;
+	JSONObject d = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +65,16 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface, On
 		String pubId = getIntent().getExtras().getString("pubId");
 		String tapsCount = getIntent().getExtras().getString("tapsCount");
 
-		nameText = (TextView) findViewById(R.id.pubName);
-		addressText = (TextView) findViewById(R.id.pubAddress);
-		openhoursText = (TextView) findViewById(R.id.pubOpenhours);
-		urlText = (TextView) findViewById(R.id.pubUrl);
-		tapsNo = (TextView) findViewById(R.id.tapsNo);
+//		nameText = (TextView) findViewById(R.id.pubName);
+		addressText = (TextView) findViewById(R.id.pubInfoAddress);
+		openhoursText = (TextView) findViewById(R.id.pubInfoOpenhours);
+		urlText = (TextView) findViewById(R.id.pubInfoUrl);
+		tapsNo = (TextView) findViewById(R.id.pubInfoTapsNo);
 		welcomeText = (TextView) findViewById(R.id.pubInfoWelcome);
 
-		pubImg = (ImageView) findViewById(R.id.pubImg);
+		pubImg = (ImageView) findViewById(R.id.pubInfoImg);
 		
-		listview = (ListView)findViewById(android.R.id.list);
+		listview = (ListView)findViewById(R.id.tapsListview);
 
 		JSONparser parser = new JSONparser(this);
 		parser.execute(url + pubId);
@@ -96,7 +97,7 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface, On
 
 				c = list.getJSONObject(i);
 
-				nameText.setText(c.getString(TAG_NAME));
+//				nameText.setText(c.getString(TAG_NAME));
 				welcomeText.setText("Välkommen till " + c.getString(TAG_NAME)
 						+ "!");
 				addressText.setText(c.getString(TAG_ADDRESS));
@@ -149,18 +150,18 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface, On
 
 			for (int i = 0; i < taps.length(); i++) {
 
-				c = taps.getJSONObject(i);
+				d = taps.getJSONObject(i);
 
-				Log.d("Namn:", c.getString(TAG_NAME));
-				Log.d("Bryggeri:", c.getString(TAG_BREWERY));
-				Log.d("Abv:", c.getString(TAG_ABV));
+				Log.d("Namn:", d.getString(TAG_NAME));
+				Log.d("Bryggeri:", d.getString(TAG_BREWERY));
+				Log.d("Abv:", d.getString(TAG_ABV));
 
-				tapIds.add(c.getString(TAG_ID));
+				tapIds.add(d.getString(TAG_ID));
 				
 				HashMap<String, String> info = new HashMap<String, String>();
-				info.put(TAG_NAME, c.getString(TAG_NAME));
-				info.put(TAG_BREWERY, c.getString(TAG_BREWERY));
-				info.put(TAG_ABV, c.getString(TAG_ABV));
+				info.put(TAG_NAME, d.getString(TAG_NAME));
+				info.put(TAG_BREWERY, d.getString(TAG_BREWERY));
+				info.put(TAG_ABV, d.getString(TAG_ABV));
 				
 				tapsAndInfo.add(info);
 
@@ -171,7 +172,7 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface, On
 		}
 		
 		SimpleAdapter adapter = new SimpleAdapter(this, tapsAndInfo,
-				R.layout.taps_list_item, new String[] { TAG_NAME }, new int[] { R.id.pubName });
+				R.layout.taps_list_item, new String[] { TAG_NAME, TAG_BREWERY, TAG_ABV }, new int[] { R.id.tapsListName, R.id.tapsListBrewery, R.id.tapsListAbv });
 
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);

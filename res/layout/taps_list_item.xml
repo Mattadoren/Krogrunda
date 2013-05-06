@@ -11,16 +11,29 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="15dp"
         android:paddingLeft="10dp"
         android:paddingTop="15dp" >
 
         <TextView 
-            android:id="@+id/tapsName"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
+            android:id="@+id/tapsListName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"/>
+        
+        <TextView 
+            android:id="@+id/tapsListBrewery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"/>
+        
+        <TextView 
+            android:id="@+id/tapsListAbv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"/>
         
     </LinearLayout>
 
