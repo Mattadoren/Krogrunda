@@ -40,24 +40,18 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 
 	JSONArray list = null;
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
-		View myFragmentView = inflater.inflate(R.layout.beer_news, container,
-				false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View myFragmentView = inflater.inflate(R.layout.beer_news, container,false);
 
 		if (getListAdapter() == null) {
-
 			JSONparser parser = new JSONparser(this);
 			parser.execute(url);
 		}
 		return myFragmentView;
 	}
-
 	@Override
 	public void onRequestComplete(JSONObject result) {
 		JSONObject json = result;
-
 		try {
 
 			list = json.getJSONArray(TAG_ITEMS);
@@ -65,9 +59,7 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 
 			for (int i = 0; i < list.length(); i++) {
 
-				JSONObject c = list.getJSONObject(i);
-				
-				
+				JSONObject c = list.getJSONObject(i);				
 				prices.add(c.getString(TAG_PRICE));
 				drinks.add(c.getString(TAG_ID));
 
@@ -79,7 +71,6 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 				info.put(TAG_PRICE, c.getString(TAG_PRICE)+ "kr");
 				info.put(TAG_PRODUCER, "Bryggeri: " + c.getString(TAG_PRODUCER));
 				data.add(info);
-
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -89,14 +80,12 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 				R.layout.newbeer_list_item, new String[] { TAG_NAME, TAG_SYSID,
 						TAG_COUNTRY, TAG_ALC }, new int[] { R.id.name,
 						R.id.country });
-
 		setListAdapter(adapter);
 
 		ListView lv = getListView();
 		lv.setOnItemClickListener(this);
 
 	}
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -108,5 +97,4 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 		startBeerNewsInfo.putExtra("beerPrices", beerPrice);
 		startActivity(startBeerNewsInfo);
 	}
-
 }

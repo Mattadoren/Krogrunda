@@ -26,9 +26,7 @@ import android.widget.TextView;
 
 public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
-	TextView nameinfo, producerinfo, sysidinfo, countryinfo, alcinfo,
-			priceinfo, idinfo, price;
-
+	TextView nameinfo, producerinfo, sysidinfo, countryinfo, alcinfo, priceinfo, idinfo, price;
 	ImageView beerimginfo;
 
 	private static String url = "http://systembevakningsagenten.se/api/json/1.0/inventoryForProduct.json?id=";
@@ -43,7 +41,6 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
 	ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 
-
 	JSONObject items = null;
 	JSONObject c = null;
 
@@ -54,7 +51,7 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
 		String beerPrices = getIntent().getExtras().getString("beerPrices");
 		String drinkIds = getIntent().getExtras().getString("drinkIds");
-		
+
 		nameinfo = (TextView) findViewById(R.id.nameinfo);
 		sysidinfo = (TextView) findViewById(R.id.sysidinfo);
 		countryinfo = (TextView) findViewById(R.id.countryinfo);
@@ -63,9 +60,8 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 		price = (TextView) findViewById(R.id.price);
 		beerimginfo = (ImageView) findViewById(R.id.beerimginfo);
 
-		
-		price.setText(beerPrices+ " kr");
-		
+		price.setText(beerPrices + " kr");
+
 		JSONparser parser = new JSONparser(this);
 		parser.execute(url + drinkIds);
 	}
@@ -74,20 +70,15 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 	public void onRequestComplete(JSONObject result) {
 		JSONObject json = result;
 		final String drinkIds = getIntent().getExtras().getString("drinkIds");
-		
-	
 
 		try {
 			items = json.getJSONObject(TAG_PRODUCT);
-			Log.e("onRequestComplete", "hämtar öldatan");
-			Log.d("Hämtar öl", "öl");
 
 			nameinfo.setText(items.getString(TAG_NAME));
 			sysidinfo.setText(items.getString(TAG_SYSID));
 			countryinfo.setText(items.getString(TAG_COUNTRY));
 			alcinfo.setText(items.getString(TAG_ALC) + "%");
 			producerinfo.setText(items.getString(TAG_PRODUCER));
-		
 
 			new Thread(new Runnable() {
 
@@ -96,34 +87,24 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
 					try {
 
-						URL imgUrl = new URL(
-								"http://systembevakningsagenten.se/images/product/id/"
-										+ drinkIds + ".jpg");
-						final Bitmap image = BitmapFactory.decodeStream(imgUrl
-								.openConnection().getInputStream());
+						URL imgUrl = new URL("http://systembevakningsagenten.se/images/product/id/" + drinkIds + ".jpg");
+						final Bitmap image = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
 
 						runOnUiThread(new Runnable() {
-
 							@Override
 							public void run() {
 								beerimginfo.setImageBitmap(image);
 							}
 						});
-
 					} catch (MalformedURLException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-
 				}
 			}).start();
-
 		} catch (JSONException e) {
 			e.printStackTrace();
-
 		}
-
 	}
-
 }

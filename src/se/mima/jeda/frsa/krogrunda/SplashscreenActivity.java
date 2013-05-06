@@ -21,41 +21,18 @@ public class SplashscreenActivity extends Activity {
 
 			@Override
 			public void run() {
-
-				// make sure we close the splash screen so the user won't come
-				// back when it presses back key
-
 				finish();
-
-				
-
 				if (!mIsBackButtonPressed) {
-					// start the home screen if the back button wasn't pressed
-					// already
-					Intent intent = new Intent(SplashscreenActivity.this,
-							MainActivity.class);
+					Intent intent = new Intent(SplashscreenActivity.this,MainActivity.class);
 					SplashscreenActivity.this.startActivity(intent);
-
 					SplashscreenActivity.this.finish();
-					
-//					overridePendingTransition(R.anim.mainfadein,
-//							R.anim.splashfadeout);
 				}
-
 			}
-
-		}, SPLASH_DURATION); // time in milliseconds (1 second = 1000
-								// milliseconds) until the run() method will be
-								// called
-
+		}, SPLASH_DURATION);
 	}
-
 	@Override
 	public void onBackPressed() {
-
-		// set the flag to true so the next activity won't start up
 		mIsBackButtonPressed = true;
 		super.onBackPressed();
-
 	}
 }
