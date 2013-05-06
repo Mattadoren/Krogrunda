@@ -9,10 +9,13 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import se.mima.jeda.frsa.krogrunda.JSONparser.MyCallbackInterface;
+import android.R.drawable;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -22,20 +25,19 @@ import android.widget.TextView;
 
 public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
-	TextView text1, text2, text3, text4;
+	TextView nameinfo, producerinfo, sysidinfo, countryinfo, alcinfo,
+			priceinfo, idinfo;
 
-	ImageView beerimg;
+	ImageView beerimginfo;
 
 	private static String url = "http://systembevakningsagenten.se/api/json/1.0/inventoryForProduct.json?id=";
 	private static String imgurl = "http://systembevakningsagenten.se/images/product/id/";
 
 	static String TAG_PRODUCT = "product";
-	static String TAG_ID = "id";
 	static String TAG_NAME = "name";
 	static String TAG_SYSID = "sysid";
 	static String TAG_COUNTRY = "country";
 	static String TAG_ALC = "alcohol_vol";
-	static String TAG_PRICE = "price";
 	static String TAG_PRODUCER = "producer";
 
 	ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
@@ -51,12 +53,12 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
 		String drinkIds = getIntent().getExtras().getString("drinkIds");
 
-		text1 = (TextView) findViewById(R.id.text1);
-		text2 = (TextView) findViewById(R.id.text2);
-		text3 = (TextView) findViewById(R.id.text3);
-		text4 = (TextView) findViewById(R.id.text4);
-
-		beerimg = (ImageView) findViewById(R.id.beerimg);
+		nameinfo = (TextView) findViewById(R.id.nameinfo);
+		sysidinfo = (TextView) findViewById(R.id.sysidinfo);
+		countryinfo = (TextView) findViewById(R.id.countryinfo);
+		alcinfo = (TextView) findViewById(R.id.alcinfo);
+		producerinfo = (TextView) findViewById(R.id.producerinfo);
+		beerimginfo = (ImageView) findViewById(R.id.beerimginfo);
 
 		JSONparser parser = new JSONparser(this);
 		parser.execute(url + drinkIds);
@@ -72,8 +74,11 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 			Log.e("onRequestComplete", "hämtar öldatan");
 			Log.d("Hämtar öl", "öl");
 
-			text1.setText(items.getString(TAG_NAME));
-			text2.setText(items.getString(TAG_PRODUCER));
+			nameinfo.setText(items.getString(TAG_NAME));
+			sysidinfo.setText(items.getString(TAG_SYSID));
+			countryinfo.setText(items.getString(TAG_COUNTRY));
+			alcinfo.setText(items.getString(TAG_ALC) + "%");
+			producerinfo.setText(items.getString(TAG_PRODUCER));
 
 			new Thread(new Runnable() {
 
@@ -82,16 +87,23 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
 					try {
 						URL imgUrl = new URL(
-								"http://systembevakningsagenten.se/images/product/id/" + drinkIds + ".jpg");
+								"http://systembevakningsagenten.se/	images/product/id/"
+										+ drinkIds + ".jpg");
 						final Bitmap image = BitmapFactory.decodeStream(imgUrl
 								.openConnection().getInputStream());
-						runOnUiThread(new Runnable() {
 
-							@Override
-							public void run() {
-								beerimg.setImageBitmap(image);
-							}
-						});
+						if (image != null) {
+							runOnUiThread(new Runnable() {
+
+								@Override
+								public void run() {
+									beerimginfo.setImageBitmap(image);
+								}
+							});
+						} else {
+							beerimginfo
+									.setImageResource(drawable.arrow_down_float);
+						}
 					} catch (MalformedURLException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
