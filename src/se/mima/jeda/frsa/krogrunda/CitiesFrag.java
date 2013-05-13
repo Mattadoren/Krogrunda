@@ -42,18 +42,17 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 			Bundle savedInstanceState) {
 
 		
-		
 		View myFragmentView = inflater.inflate(R.layout.cities, container,
 				false);
 
 		if (getListAdapter() == null) {
 			JSONparser parser = new JSONparser(this);
-			Log.d("KÖR1", "KÖR1");
 			parser.execute(url);
 			
 		}
 
 		return myFragmentView;
+		
 	}
 
 	@Override

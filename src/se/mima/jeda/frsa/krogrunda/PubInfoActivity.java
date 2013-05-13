@@ -3,8 +3,6 @@ package se.mima.jeda.frsa.krogrunda;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,69 +10,60 @@ import org.json.JSONObject;
 
 import se.mima.jeda.frsa.krogrunda.JSONparser.MyCallbackInterface;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class PubInfoActivity extends Activity implements MyCallbackInterface, OnItemClickListener {
+public class PubInfoActivity extends Activity implements MyCallbackInterface, OnClickListener {
 
 	TextView nameText, addressText, openhoursText, urlText, tapsNo;
-	TextView welcomeText;
-
 	ImageView pubImg;
-	
-	ListView listview;
+	Button tapsListButton;
+	String pubId;
 
 	private static String url = "http://api.fatkoll.se/json/1.0/getPlaces.json?api_key=fd6950b1499b71037ec3c5a5e01081d6&place_id=";
 
 	static String TAG_LIST = "list";
-	static String TAG_TAPS = "taps";
 	static String TAG_ID = "id";
 	static String TAG_NAME = "name";
 	static String TAG_ADDRESS = "address";
 	static String TAG_OPEN_HOURS = "openhours";
 	static String TAG_URL = "url";
-	static String TAG_BREWERY = "brewery";
-	static String TAG_ABV = "abv";
 	static String TAG_IMG = "img";
 	static String TAG_ORIGINAL = "original";
-
-	ArrayList<HashMap<String, String>> tapsAndInfo = new ArrayList<HashMap<String, String>>();
-	private ArrayList<String> tapIds = new ArrayList<String>();
 
 	JSONArray list = null;
 	JSONObject listObject = null;
 	JSONArray taps = null;
 
 	JSONObject c = null;
-	JSONObject d = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pub_info);
+		
+		
 
-		String pubId = getIntent().getExtras().getString("pubId");
+		pubId = getIntent().getExtras().getString("pubId");
 		String tapsCount = getIntent().getExtras().getString("tapsCount");
 
-//		nameText = (TextView) findViewById(R.id.pubName);
+		nameText = (TextView) findViewById(R.id.pubInfoName);
 		addressText = (TextView) findViewById(R.id.pubInfoAddress);
 		openhoursText = (TextView) findViewById(R.id.pubInfoOpenhours);
 		urlText = (TextView) findViewById(R.id.pubInfoUrl);
 		tapsNo = (TextView) findViewById(R.id.pubInfoTapsNo);
-		welcomeText = (TextView) findViewById(R.id.pubInfoWelcome);
+		tapsListButton = (Button)findViewById(R.id.pubInfoButton);
+		tapsListButton.setOnClickListener(this);
 
 		pubImg = (ImageView) findViewById(R.id.pubInfoImg);
-		
-		listview = (ListView)findViewById(R.id.tapsListview);
 
 		JSONparser parser = new JSONparser(this);
 		parser.execute(url + pubId);
@@ -97,9 +86,7 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface, On
 
 				c = list.getJSONObject(i);
 
-//				nameText.setText(c.getString(TAG_NAME));
-				welcomeText.setText("Välkommen till " + c.getString(TAG_NAME)
-						+ "!");
+				nameText.setText(c.getString(TAG_NAME));
 				addressText.setText(c.getString(TAG_ADDRESS));
 				Log.d("Address:", c.getString(TAG_ADDRESS));
 
@@ -140,52 +127,20 @@ public class PubInfoActivity extends Activity implements MyCallbackInterface, On
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-
 					}
 				}).start();
-
 			}
-			listObject = list.getJSONObject(0);
-			taps = listObject.getJSONArray(TAG_TAPS);
-
-			for (int i = 0; i < taps.length(); i++) {
-
-				d = taps.getJSONObject(i);
-
-				Log.d("Namn:", d.getString(TAG_NAME));
-				Log.d("Bryggeri:", d.getString(TAG_BREWERY));
-				Log.d("Abv:", d.getString(TAG_ABV));
-
-				tapIds.add(d.getString(TAG_ID));
-				
-				HashMap<String, String> info = new HashMap<String, String>();
-				info.put(TAG_NAME, d.getString(TAG_NAME));
-				info.put(TAG_BREWERY, d.getString(TAG_BREWERY));
-				info.put(TAG_ABV, d.getString(TAG_ABV));
-				
-				tapsAndInfo.add(info);
-
-			}
-
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
-		SimpleAdapter adapter = new SimpleAdapter(this, tapsAndInfo,
-				R.layout.taps_list_item, new String[] { TAG_NAME, TAG_BREWERY, TAG_ABV }, new int[] { R.id.tapsListName, R.id.tapsListBrewery, R.id.tapsListAbv });
-
-		listview.setAdapter(adapter);
-		listview.setOnItemClickListener(this);
-//		setListAdapter(adapter);
-		
-//		ListView lv = getListView();
-//		lv.setOnItemClickListener(this);
-
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
+	public void onClick(View v) {
+		Intent startTapsListIntent = new Intent(this,
+				TapsActivity.class);
+		startTapsListIntent.putExtra("pubId", pubId);
+		startActivity(startTapsListIntent);
 		
 	}
 }

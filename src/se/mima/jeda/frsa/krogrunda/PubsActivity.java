@@ -48,7 +48,6 @@ public class PubsActivity extends ListActivity implements OnItemClickListener,
 
 		JSONparser parser = new JSONparser(this);
 		parser.execute(url + cityId);
-
 	}
 
 	@Override

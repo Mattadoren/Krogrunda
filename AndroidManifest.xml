@@ -42,13 +42,21 @@
         </activity>
         <activity
             android:name="se.mima.jeda.frsa.krogrunda.PubInfoActivity"
-            android:label="@string/title_activity_pub_info" 
- 			android:screenOrientation="portrait"
+            android:label="@string/title_activity_pub_info"
+            android:screenOrientation="portrait"
             android:theme="@style/ThemeSelectorMain" >
         </activity>
         <activity
             android:name="se.mima.jeda.frsa.krogrunda.BeerNewsInfo"
             android:label="@string/title_activity_beer_news_info" >
+        </activity>
+        <activity
+            android:name="se.mima.jeda.frsa.krogrunda.TapsActivity"
+            android:label="@string/title_activity_taps" >
+        </activity>
+        <activity
+            android:name="se.mima.jeda.frsa.krogrunda.TapInfoActivity"
+            android:label="@string/title_activity_tap_info" >
         </activity>
     </application>
 
