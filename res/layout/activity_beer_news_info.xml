@@ -30,27 +30,54 @@
             android:orientation="vertical"
             android:padding="3dp" >
 
-            <TextView
-                android:id="@+id/nameinfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:textColor="#4F4F4F"
-                android:textSize="24dp" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/sysidinfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#4F4F4F"
-                android:textSize="16dp" />
+                <TextView
+                    android:id="@+id/nameinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#4F4F4F"
+                    android:textSize="24dp" />
 
-            <TextView
-                android:id="@+id/alcinfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#4F4F4F"
-                android:textSize="16dp" />
+                <TextView
+                    android:id="@+id/sysidinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4F4F4F"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/alcinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4F4F4F"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.9"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ratebeer" />
+
+                <TextView
+                    android:id="@+id/ratebeer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#4F4F4F"
+                    android:textSize="45dp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
@@ -85,8 +112,8 @@
             android:layout_height="wrap_content"
             android:textColor="#4F4F4F"
             android:textSize="19dp" />
-        
-             <TextView
+
+        <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

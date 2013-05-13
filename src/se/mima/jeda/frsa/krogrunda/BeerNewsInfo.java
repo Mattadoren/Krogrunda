@@ -26,7 +26,8 @@ import android.widget.TextView;
 
 public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
-	TextView nameinfo, producerinfo, sysidinfo, countryinfo, alcinfo, priceinfo, idinfo, price;
+	TextView nameinfo, producerinfo, sysidinfo, countryinfo, alcinfo,
+			priceinfo, idinfo, price, ratebeer;
 	ImageView beerimginfo;
 
 	private static String url = "http://systembevakningsagenten.se/api/json/1.0/inventoryForProduct.json?id=";
@@ -51,6 +52,7 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
 		String beerPrices = getIntent().getExtras().getString("beerPrices");
 		String drinkIds = getIntent().getExtras().getString("drinkIds");
+		String ratingIds = getIntent().getExtras().getString("ratingIds");
 
 		nameinfo = (TextView) findViewById(R.id.nameinfo);
 		sysidinfo = (TextView) findViewById(R.id.sysidinfo);
@@ -59,9 +61,11 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 		producerinfo = (TextView) findViewById(R.id.producerinfo);
 		price = (TextView) findViewById(R.id.price);
 		beerimginfo = (ImageView) findViewById(R.id.beerimginfo);
+		ratebeer = (TextView) findViewById(R.id.ratebeer);
 
 		price.setText(beerPrices + " kr");
 
+		ratebeer.setText(" "+ratingIds + "/100");
 		JSONparser parser = new JSONparser(this);
 		parser.execute(url + drinkIds);
 	}
@@ -79,7 +83,7 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 			countryinfo.setText(items.getString(TAG_COUNTRY));
 			alcinfo.setText(items.getString(TAG_ALC) + "%");
 			producerinfo.setText(items.getString(TAG_PRODUCER));
-
+			// ratebeer.setText(items.getString(TAG_RATING_RB_OVERALL));
 			new Thread(new Runnable() {
 
 				@Override
@@ -87,8 +91,11 @@ public class BeerNewsInfo extends Activity implements MyCallbackInterface {
 
 					try {
 
-						URL imgUrl = new URL("http://systembevakningsagenten.se/images/product/id/" + drinkIds + ".jpg");
-						final Bitmap image = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+						URL imgUrl = new URL(
+								"http://systembevakningsagenten.se/images/product/id/"
+										+ drinkIds + ".jpg");
+						final Bitmap image = BitmapFactory.decodeStream(imgUrl
+								.openConnection().getInputStream());
 
 						runOnUiThread(new Runnable() {
 							@Override
