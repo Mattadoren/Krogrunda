@@ -14,6 +14,7 @@ public class Getlocation {
 	double lat = 0, lng = 0;
 	private NearbyFrag nearByFrag;
 
+
 	public Getlocation(Context mContext, NearbyFrag nearByFrag) {
 		this.nearByFrag = nearByFrag;
 		this.mContext = mContext;
@@ -23,6 +24,7 @@ public class Getlocation {
 		mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
 				0, mlocListener);
 	}
+	
 
 	public class MyLocationListener implements LocationListener {
 		private static final int TWO_MINUTES = 1000 * 60 * 2;
@@ -47,7 +49,7 @@ public class Getlocation {
 				public void run() {
 					nearByFrag.lat = lat;
 					nearByFrag.lng = lng;
-					Toast.makeText(nearByFrag.getActivity(), lat+"from getlocation och "+lng, Toast.LENGTH_LONG).show();
+				//	Toast.makeText(nearByFrag.getActivity(), lat+"from getlocation och "+lng, Toast.LENGTH_LONG).show();
 					mlocManager.removeUpdates(mlocListener);
 					
 				}

@@ -14,5 +14,6 @@
     <string name="pubInfoButtonText">Visa Öl</string>
     <string name="title_activity_taps">TapsActivity</string>
     <string name="title_activity_tap_info">TapInfoActivity</string>
+    <string name="title_activity_nearby_locationmap">NearbyLocationmap</string>
 
 </resources>
