@@ -35,8 +35,19 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 
 	private ArrayList<HashMap<String, String>> citysAndCount = new ArrayList<HashMap<String, String>>();
 	private ArrayList<String> cityIds = new ArrayList<String>();
+	
+	ListView lv;
 
 	JSONArray list = null;
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		lv = getListView();
+		lv.setOnItemClickListener(this);
+		
+	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -48,7 +59,19 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 		if (getListAdapter() == null) {
 			JSONparser parser = new JSONparser(this);
 			parser.execute(url);
-			
+			Thread th = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			});
+			th.start();
 		}
 
 		return myFragmentView;
@@ -87,8 +110,6 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 						R.id.pubsCount });
 		
 		setListAdapter(adapter);
-		ListView lv = getListView();
-		lv.setOnItemClickListener(this);
 		
 
 	}
@@ -101,7 +122,8 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 				PubsActivity.class);
 		startPubsListIntent.putExtra("cityId", cityId);
 		startActivity(startPubsListIntent);
-
+		Log.d("OnItemClick", "KLICK");
+		lv.setOnItemClickListener(null);
 	}
 
 }

@@ -40,8 +40,20 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 	private ArrayList<String> prices = new ArrayList<String>();
 	private ArrayList<String> ratings = new ArrayList<String>();
 
+	ListView lv;
+	
 	JSONArray list = null;
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		lv = getListView();
+		lv.setOnItemClickListener(this);
+		
+		}
+	
+	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View myFragmentView = inflater.inflate(R.layout.beer_news, container,
@@ -50,7 +62,23 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 		if (getListAdapter() == null) {
 			JSONparser parser = new JSONparser(this);
 			parser.execute(url);
+			Thread th = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
+				}
+			});
+			th.start();
 		}
+		
+
+		
 		return myFragmentView;
 	}
 
@@ -88,10 +116,8 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 						R.id.country });
 
 		setListAdapter(adapter);
-
-		ListView lv = getListView();
-		lv.setOnItemClickListener(this);
-
+		
+		
 	}
 
 	@Override
@@ -106,5 +132,7 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 		startBeerNewsInfo.putExtra("beerPrices", beerPrice);
 		startBeerNewsInfo.putExtra("ratingIds", ratingIds);
 		startActivity(startBeerNewsInfo);
+		Log.d("OnItemClick", "KLICK");
+		//lv.setOnItemClickListener(null);
 	}
 }
