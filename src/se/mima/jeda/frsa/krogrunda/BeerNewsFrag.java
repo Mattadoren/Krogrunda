@@ -2,16 +2,13 @@ package se.mima.jeda.frsa.krogrunda;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import se.mima.jeda.frsa.krogrunda.JSONparser.MyCallbackInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,20 +47,20 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 		
 		lv = getListView();
 		lv.setOnItemClickListener(this);
-		
 		}
 	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
 		View myFragmentView = inflater.inflate(R.layout.beer_news, container,
 				false);
 
 		if (getListAdapter() == null) {
 			JSONparser parser = new JSONparser(this);
 			parser.execute(url);
-			Thread th = new Thread(new Runnable() {
 
+			Thread th = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					try {
@@ -71,33 +68,30 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-
 				}
 			});
 			th.start();
 		}
-		
-
-		
 		return myFragmentView;
 	}
 
 	@Override
 	public void onRequestComplete(JSONObject result) {
-		JSONObject json = result;
-		try {
 
+		JSONObject json = result;
+		
+		try {
 			list = json.getJSONArray(TAG_ITEMS);
-			Log.e("onRequestComplete", "Fått JSONArray");
 
 			for (int i = 0; i < list.length(); i++) {
-
 				JSONObject c = list.getJSONObject(i);
+
 				prices.add(c.getString(TAG_PRICE));
 				drinks.add(c.getString(TAG_ID));
 				ratings.add(c.getString(TAG_RATING_RB_OVERALL));
 
 				HashMap<String, String> info = new HashMap<String, String>();
+				
 				info.put(TAG_NAME, c.getString(TAG_NAME));
 				info.put(TAG_SYSID, "Artikelnr: " + c.getString(TAG_SYSID));
 				info.put(TAG_COUNTRY, "Land: " + c.getString(TAG_COUNTRY));
@@ -116,23 +110,20 @@ public class BeerNewsFrag extends ListFragment implements OnItemClickListener,
 						R.id.country });
 
 		setListAdapter(adapter);
-		
-		
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Log.d(TAG_PRICE, TAG_PRICE);
 		String beerPrice = prices.get(position).toString();
 		String drinkIds = drinks.get(position).toString();
 		String ratingIds = ratings.get(position).toString();
+	
 		Intent startBeerNewsInfo = new Intent(getActivity(), BeerNewsInfo.class);
 		startBeerNewsInfo.putExtra("drinkIds", drinkIds);
 		startBeerNewsInfo.putExtra("beerPrices", beerPrice);
 		startBeerNewsInfo.putExtra("ratingIds", ratingIds);
+		
 		startActivity(startBeerNewsInfo);
-		Log.d("OnItemClick", "KLICK");
-		//lv.setOnItemClickListener(null);
 	}
 }

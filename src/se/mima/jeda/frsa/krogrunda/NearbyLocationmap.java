@@ -78,8 +78,6 @@ public class NearbyLocationmap extends Activity implements MyCallbackInterface {
 
 		final JSONparser parser = new JSONparser(this);
 		parser.execute(url + "&lat=" + lat + "&lng=" + lon + "&dist_km=5");
-		Log.e("hej", url + "&lat=" + lat + "&lng=" + lon + "&dist_km=5");
-		Log.e(TAG_NAME, "namn");
 		
 
 
@@ -88,7 +86,7 @@ public class NearbyLocationmap extends Activity implements MyCallbackInterface {
 
 	public void addMarker(double lat, double lon, String address) {
 		LatLng latlng = new LatLng(lat, lon);
-		mmap.addMarker(new MarkerOptions().position(latlng).title(address).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+		mmap.addMarker(new MarkerOptions().position(latlng).title("Systembolag").snippet(address).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 	}
 
 	@Override

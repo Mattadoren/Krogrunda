@@ -104,10 +104,7 @@ public class NearbyFrag extends ListFragment implements OnItemClickListener,
 					e.printStackTrace();
 				}
 				if (getListAdapter() == null) {
-					Log.d("KÖR1GOGOGOOGOGO", "KÖR1GOGOGOGOGO");
 					parser.execute(url + "&lat=" + lat + "&lng=" + lng
-							+ "&dist_km=5");
-					Log.e("hej", url + "&lat=" + lat + "&lng=" + lng
 							+ "&dist_km=5");
 
 				}

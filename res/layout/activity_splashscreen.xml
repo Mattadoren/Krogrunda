@@ -9,9 +9,22 @@
     tools:context=".SplashscreenActivity"
     android:background="#FFFFFF" >
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/splashscreenProgressBar"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SPLASHSCREEN" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/splashscreenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/splashscreenProgressBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Kontrollerar anslutning..."
+        android:textSize="25sp" />
 
 </RelativeLayout>

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -13,23 +12,20 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class JSONparser extends AsyncTask<String, Void, JSONObject> {
 
-	// Initializing variables
-
 	static InputStream is = null;
 	static JSONObject jObj = null;
 	static String json = "";
 
+	private MyCallbackInterface mCallback;
+
 	public interface MyCallbackInterface {
 		public void onRequestComplete(JSONObject result);
 	}
-
-	private MyCallbackInterface mCallback;
 
 	public JSONparser(MyCallbackInterface callback) {
 		mCallback = callback;

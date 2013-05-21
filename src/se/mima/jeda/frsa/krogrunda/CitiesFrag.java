@@ -2,26 +2,21 @@ package se.mima.jeda.frsa.krogrunda;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import se.mima.jeda.frsa.krogrunda.JSONparser.MyCallbackInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 public class CitiesFrag extends ListFragment implements OnItemClickListener,
 		MyCallbackInterface {
@@ -46,19 +41,18 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 		
 		lv = getListView();
 		lv.setOnItemClickListener(this);
-		
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		
 		View myFragmentView = inflater.inflate(R.layout.cities, container,
 				false);
 
 		if (getListAdapter() == null) {
 			JSONparser parser = new JSONparser(this);
 			parser.execute(url);
+
 			Thread th = new Thread(new Runnable() {
 				
 				@Override
@@ -68,19 +62,15 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					
 				}
 			});
 			th.start();
 		}
-
-		return myFragmentView;
-		
+	return myFragmentView;
 	}
 
 	@Override
 	public void onRequestComplete(JSONObject result) {
-		Log.d("KÖR2", "KÖR2");
 		JSONObject json = result;
 
 		try {
@@ -110,20 +100,19 @@ public class CitiesFrag extends ListFragment implements OnItemClickListener,
 						R.id.pubsCount });
 		
 		setListAdapter(adapter);
-		
-
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		String cityId = cityIds.get(position).toString();
+
 		Intent startPubsListIntent = new Intent(getActivity(),
 				PubsActivity.class);
+		
 		startPubsListIntent.putExtra("cityId", cityId);
+		
 		startActivity(startPubsListIntent);
-		Log.d("OnItemClick", "KLICK");
 		lv.setOnItemClickListener(null);
 	}
-
 }
